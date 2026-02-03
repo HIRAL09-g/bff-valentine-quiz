@@ -217,6 +217,16 @@
         <div id="heartfelt-letter" style="margin-top: 20px; border-top: 1px solid #ffb3c1; padding-top: 15px; font-style: italic; color: #590d22;">
             <p>P.S. Beyond the quiz, I just wanted to say thanks for being the best friend I could ask for. Whether we're sending memes or stressing over code, I'm glad we're in this together. Happy Valentine's Day! 🍫</p>
         </div>
+        <a id="whatsapp-btn" href="#" target="_blank" style="display: inline-block; margin-top: 20px; padding: 12px 25px; background-color: #25D366; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 0.9rem;">
+            Share My Score to WhatsApp 📱
+        </a>
+        
+        <script>
+            // This part goes inside your existing script or right after the button
+            const shareBtn = document.getElementById('whatsapp-btn');
+            const message = encodeURIComponent("I just got a 10/10 on our BFF Quiz! 💖 Check it out here: " + window.location.href);
+            shareBtn.href = "https://wa.me/?text=" + message;
+        </script>
     </div>
 </div>
 
