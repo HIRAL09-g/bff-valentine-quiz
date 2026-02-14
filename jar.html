@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Bestie Jar</title>
+    <style>
+        body { 
+            background-color: #fff0f3; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            font-family: 'Segoe UI', sans-serif; 
+            overflow-x: hidden; 
+        }
+        
+        /* Spotify and Header spacing */
+        iframe { margin-bottom: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .header-msg { text-align: center; margin-bottom: 20px; }
+        h1 { color: #ff4d6d; }
+
+        /* The Jar Styling */
+        .jar-container { position: relative; cursor: pointer; transition: transform 0.2s; }
+        .jar-container:active { transform: scale(0.95); }
+        .jar { 
+            width: 140px; 
+            height: 180px; 
+            background: white; 
+            border: 4px solid #590d22; 
+            border-radius: 20px 20px 50px 50px; 
+            position: relative; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+        }
+        .jar::before { 
+            content: ''; 
+            position: absolute; 
+            top: -15px; left: 50%; transform: translateX(-50%); 
+            width: 90px; height: 18px; 
+            background: #ff4d6d; border: 3px solid #590d22; border-radius: 5px; 
+        }
+
+        /* The Box where reasons appear */
+        #note-display { 
+            min-height: 80px; 
+            width: 300px; 
+            background: white; 
+            padding: 20px; 
+            border-radius: 20px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+            margin-top: 20px; 
+            text-align: center; 
+            font-weight: bold; 
+            color: #ff4d6d; 
+            opacity: 0; 
+            transition: 0.4s ease; 
+        }
+        #note-display.show { opacity: 1; }
+
+        /* Flying Hearts */
+        .heart-pop { position: absolute; color: #ff4d6d; animation: fly 1s forwards; pointer-events: none; }
+        @keyframes fly { 
+            0% { transform: translateY(0) scale(1); opacity: 1; } 
+            100% { transform: translateY(-120px) scale(1.5); opacity: 0; } 
+        }
+    </style>
+</head>
+<body>
+
+    <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/11EpCs83ziKzQKwDy027CD?utm_source=generator&theme=0" width="90%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <div class="header-msg">
+        <h1>The Bestie Jar 🍯</h1>
+        <p>Click the jar for a surprise!</p>
+    </div>
+
+    <div class="jar-container" onclick="getNewReason(event)">
+        <div class="jar">🍯</div>
+    </div>
+
+    <div id="note-display"></div>
+
+    <script>
+        // List of reasons - Feel free to change these!
+        const reasons = [
+            "You always make me laugh! 😂",
+            "You're the best listener I know. 👂✨",
+            "You never judge my weirdness. 🤡",
+            "You're stuck with me forever! 👯‍♀️",
+            "You believe in me even when I don't. 💪",
+            "You're the first person I want to tell news to. 📱",
+            "Because life is just better with you. ❤️"
+        ];
+
+        let clicks = 0;
+
+        function getNewReason(e) {
+            clicks++; // Count the clicks
+            
+            const display = document.getElementById('note-display');
+            display.classList.remove('show'); // Hide for a split second to reset
+
+            setTimeout(() => {
+                // If she clicks 10 times, show the secret message!
+                if (clicks === 10) {
+                    display.innerHTML = "<div style='color: #590d22;'>✨ TOP SECRET REASON ✨<br><br>Honestly, a jar isn't big enough for all the reasons you're the best. I'm so lucky to have you! 💖</div>";
+                    display.style.border = "3px dashed #ff4d6d";
+                } else if (clicks > 10) {
+                    // After the secret message, keep showing random reasons
+                    display.innerText = reasons[Math.floor(Math.random() * reasons.length)];
+                } else {
+                    // Regular reasons for clicks 1 through 9
+                    display.innerText = reasons[Math.floor(Math.random() * reasons.length)];
+                }
+                display.classList.add('show'); // Make it fade in
+            }, 100);
+
+            // Flying Heart Code
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.className = 'heart-pop';
+            heart.style.left = e.clientX + 'px';
+            heart.style.top = e.clientY + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 1000);
+        }
+    </script>
+</body>
+</html>
